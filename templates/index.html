@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  {% extends "layout.html" %}
+
+  {% block body %}
+  <body>
+    <nav class="navbar navbar-fixed-top navbar-inverse">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+          </button>
+          <a class="navbar-brand" href="/">推云</a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+          </ul>
+          <!-- <form class="navbar-form navbar-right">
+            <input type="text" class="form-control" placeholder="Search">
+          </form> -->
+        </div><!-- /.nav-collapse -->
+      </div><!-- /.container -->
+    </nav><!-- /.navbar -->
+
+    <div class="container">
+      <div>
+        这是一个将知乎问答转成 kindle 电子书的服务。
+        <br>
+        (1) 如果你填写的是普通邮箱，电子书将以附件形式发送到你邮箱。
+        <br>
+        (2) 如果你填写的是amazon的邮箱(***@kindle.cn), 电子书将自动推送到你的kindle 设备上。当然需要做下设置， 参见：<a href="/setting" target="_blank">如何设置可信任邮箱</a>
+        <br/></br>
+      </div>
+
+      <div class="row row-offcanvas row-offcanvas-right">
+        
+        <div class="col-xs-12 col-sm-9">
+            <div class="form-group">
+              <label for="exampleInputEmail1">邮件地址      （例如： xxxx@kindle.cn）</label>
+              <input class="form-control" id="email" placeholder="Enter email">
+            </div>
+            <div class="form-group">
+              <label for="exampleInputEmail1">知乎问题地址   （例如：http://www.zhihu.com/question/27191586）</label>
+              <input  class="form-control" id="address" placeholder="Enter address ">
+            </div>
+            <button  class="btn btn-default send">生成mobi文件</button>
+        </div>
+
+      </div><!--/row-->
+
+      <hr>
+
+      <footer>
+        <p>&copy; Company 2015</p>
+      </footer>
+
+    </div><!--/.container-->
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="http://cdn.bootcss.com/jquery/1.11.2/jquery.min.js"></script>
+    <script src="http://cdn.bootcss.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <script>
+      $(".send").click(function(){
+          email = $("#email").val()
+          address = $("#address").val()
+          if(email&&address){
+            $(".send").addClass("disabled")
+            $('.send').text("请稍候")
+            data = {
+              "email": email,
+              "address": address
+            }
+            $.post("/send/", data, function(res){
+                if(res.code == 0){
+                  console.log("success");
+                  $(".send").removeClass("disabled")
+                  $('.send').text("生成mobi文件")
+                  alert("正在处理，稍候将推送到你的邮箱或者kindle")
+                }
+                else{
+                  console.log("fail");
+                }
+            })
+          }
+
+      })
+
+    </script>
+  </body>
+  {% endblock %}
+</html>
