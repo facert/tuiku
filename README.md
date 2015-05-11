@@ -12,6 +12,8 @@ INSTALL
 
 2. 安装 calibre: http://calibre-ebook.com/
 
+3. 将 config.ini 中的 email 和 password 换成 自己的 知乎账号和密码
+
 RUN
 
         python manage.py runserver   
