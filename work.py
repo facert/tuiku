@@ -134,11 +134,11 @@ class ZhihuToMobi(object):
     def md_to_mobi(self):
         question_path = self.question_path
         mobi_path = self.mobi_path
-        command1 = "/Applications/calibre.app/Contents/console.app/Contents/MacOS/ebook-convert %s %s  --markdown-extensions  --output-profile=kindle_pw --mobi-file-type=old \
+        command1 = "ebook-convert %s %s  --markdown-extensions  --output-profile=kindle_pw --mobi-file-type=old \
             --mobi-ignore-margins --mobi-keep-original-images --no-inline-toc --remove-paragraph-spacing" % (question_path, mobi_path)
         ret1 = subprocess.call(command1, shell=True)
         title = self.title.replace(" ", "")
-        command2 = "/Applications/calibre.app/Contents/console.app/Contents/MacOS/ebook-meta %s --authors zhihu --title %s " % (mobi_path, title)
+        command2 = "ebook-meta %s --authors zhihu --title %s " % (mobi_path, title)
         ret2 = subprocess.call(command2, shell=True)
         if ret1 != 0 and ret2 != 0:
             raise Exception("[%s] execute failed." % command1)
