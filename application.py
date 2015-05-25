@@ -6,6 +6,7 @@ import redis
 import pymongo
 from work import MailToKindle
 import os
+import re
 
 
 app = Flask(__name__)
@@ -41,6 +42,7 @@ def index():
 def send():
 	email = request.form.get("email", None)
 	address = request.form.get("address", None)
+	address = re.sub("/answer/\d+", '', address)
 	if email and address:
 		mobi = db.kindle.find({"address": address}).count()
 		if mobi:
